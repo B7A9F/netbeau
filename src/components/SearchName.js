@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import Input from "../libs/Input";
-
 import { C } from "../constants";
+import useDebounce from "../hooks/useDebounce";
 const SearchName = ({ names, setNames }) => {
   const [searchParams, setSearchParams] = useSearchParams({ filter: "" });
+  const debouncedSearch = useDebounce(searchParams, 300);
   const findNames = () => {
-    const result = names.filter((a) => {
-      return a.name
+    const result = names.filter((e) => {
+      return e.name
         .toLowerCase()
         .includes(searchParams.get(C.FILTER).toLowerCase());
     });
     setNames(result);
   };
-  console.log(searchParams.get(C.FILTER));
+
   useEffect(() => {
     findNames();
-  }, [searchParams]);
+  }, [debouncedSearch]);
 
   return (
     <Input
@@ -25,7 +26,6 @@ const SearchName = ({ names, setNames }) => {
       value={searchParams.get(C.FILTER)}
       onChange={(e) => {
         setSearchParams({ filter: e.target.value });
-        findNames();
       }}
     />
   );

@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import NamesList from "./components/NamesList";
 
 import MainContent from "./libs/MainContent";
-
+import Loader from "./libs/Loader";
 const App = () => {
   const [names, setNames] = useState([]);
   const [backup, setBackup] = useState([]);
@@ -24,7 +24,10 @@ const App = () => {
     };
     getNames();
   }, []);
-  if (loading) return <div>loading...</div>;
+  if (loading) {
+    console.log(loading);
+    return <Loader />;
+  }
   return (
     <MainContent>
       <Header

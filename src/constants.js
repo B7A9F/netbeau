@@ -7,6 +7,7 @@ export const C = {
   LOADING: "loading",
   SEARCH_PLACEHOLDER: "Search here",
   FILTER: "filter",
+  RESULTS: "results",
 };
 
 export const dataset = [
